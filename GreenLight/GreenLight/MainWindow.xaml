@@ -1,0 +1,32 @@
+﻿<Window x:Class="GreenLight.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        DataContext="{Binding Main, Source={StaticResource Locator}}"
+        Title="Светофор" Height="640" Width="200" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+
+        <Ellipse Grid.Row="0" Fill="{Binding Red}" />
+        <Ellipse Grid.Row="1" Fill="{Binding Yellow}" />
+        <Ellipse Grid.Row="2" Fill="{Binding Green}" />
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Command="{Binding Enable}">ENABLE</Button>
+            <Button Grid.Column="1" Command="{Binding Disable}">DISABLE</Button>
+            <Button Grid.Column="2" Command="{Binding BlinkingYellow}">
+                <TextBlock TextWrapping="Wrap">BLINKING YELLOW</TextBlock>
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
