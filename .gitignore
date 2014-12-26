@@ -1,0 +1,17 @@
+Out
+out
+obj
+bin
+.idea
+_ReSharper*
+*.dotCover
+*.suo
+*.user
+*.Cache
+*.cache
+*.ncrunchsolution
+*.ncrunchproject
+/packages/*/*
+
+/Source/Duku.Site/App_Data/*.msi
+
