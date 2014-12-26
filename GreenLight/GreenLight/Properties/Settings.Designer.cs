@@ -12,7 +12,7 @@ namespace GreenLight.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -23,63 +23,48 @@ namespace GreenLight.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("00:00:05")]
         public global::System.TimeSpan StopState {
             get {
                 return ((global::System.TimeSpan)(this["StopState"]));
             }
-            set {
-                this["StopState"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("00:00:02")]
         public global::System.TimeSpan ReadyToStopState {
             get {
                 return ((global::System.TimeSpan)(this["ReadyToStopState"]));
             }
-            set {
-                this["ReadyToStopState"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("00:00:05")]
         public global::System.TimeSpan GoGoState {
             get {
                 return ((global::System.TimeSpan)(this["GoGoState"]));
             }
-            set {
-                this["GoGoState"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("00:00:02")]
         public global::System.TimeSpan ReadyToGoState {
             get {
                 return ((global::System.TimeSpan)(this["ReadyToGoState"]));
             }
-            set {
-                this["ReadyToGoState"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("00:00:04")]
         public global::System.TimeSpan GoGoIsAlmostDoneState {
             get {
                 return ((global::System.TimeSpan)(this["GoGoIsAlmostDoneState"]));
-            }
-            set {
-                this["GoGoIsAlmostDoneState"] = value;
             }
         }
     }

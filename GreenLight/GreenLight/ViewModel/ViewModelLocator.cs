@@ -37,9 +37,9 @@ namespace GreenLight.ViewModel
             get { return ServiceLocator.Current.GetInstance<MainViewModel>(); }
         }
 
-        public static void Cleanup()
+        public void Cleanup()
         {
-            // TODO Clear the ViewModels
+            Main.Cleanup();
         }
     }
 }

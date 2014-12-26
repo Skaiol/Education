@@ -46,9 +46,10 @@ namespace GreenLight.ViewModel
 
         private void InitCommands()
         {
-            Enable = new RelayCommand(EnableExecute, () => !_trafficLight.IsEnabled);
-            Disable = new RelayCommand(DisableExecute, () => _trafficLight.IsEnabled || _trafficLight.IsBlinkingYellow);
-            BlinkingYellow = new RelayCommand(BlinkingYellowExecute, () => !_trafficLight.IsBlinkingYellow);
+            Enable = new RelayCommand(_trafficLight.Enable, () => !_trafficLight.IsEnabled);
+            Disable = new RelayCommand(_trafficLight.Disable,
+                () => _trafficLight.IsEnabled || _trafficLight.IsBlinkingYellow);
+            BlinkingYellow = new RelayCommand(_trafficLight.EnableBlinkingYellow, () => !_trafficLight.IsBlinkingYellow);
         }
 
         private void Green_StateChanged(object sender, EventArgs e)
@@ -64,21 +65,6 @@ namespace GreenLight.ViewModel
         private void Red_StateChanged(object sender, EventArgs e)
         {
             RaisePropertyChanged(() => Red);
-        }
-
-        private void EnableExecute()
-        {
-            _trafficLight.Enable();
-        }
-
-        private void BlinkingYellowExecute()
-        {
-            _trafficLight.EnableBlinkingYellow();
-        }
-
-        private void DisableExecute()
-        {
-            _trafficLight.Disable();
         }
     }
 }
