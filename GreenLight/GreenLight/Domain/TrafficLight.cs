@@ -52,7 +52,7 @@ namespace GreenLight.Domain
             goGoIsAlmostDoneState.NextState = readyToStopState;
             readyToStopState.NextState = stopState;
 
-            new StateConfigurator()
+            StateConfigurator.Instance
                 .Configure(stopState)
                 .Configure(readyToGoState)
                 .Configure(goGoState)
@@ -82,7 +82,7 @@ namespace GreenLight.Domain
             IsEnabled = false;
 
             var brokenState = new BlinkingYellowState(this);
-            new StateConfigurator()
+            StateConfigurator.Instance
                 .Configure(brokenState);
 
             brokenState.DoWork();

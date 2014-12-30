@@ -7,6 +7,18 @@ namespace GreenLight.Domain.States.Configurators
 {
     public sealed class StateConfigurator
     {
+        private static readonly Lazy<StateConfigurator> _instance =
+            new Lazy<StateConfigurator>(() => new StateConfigurator());
+
+        private StateConfigurator()
+        {
+        }
+
+        public static StateConfigurator Instance
+        {
+            get { return _instance.Value; }
+        }
+
         public StateConfigurator Configure(ReadyToGoState state)
         {
             state.Duration = Settings.Default.ReadyToGoState;

@@ -11,9 +11,9 @@
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
 
-        <Ellipse Grid.Row="0" Fill="{Binding Red}" />
-        <Ellipse Grid.Row="1" Fill="{Binding Yellow}" />
-        <Ellipse Grid.Row="2" Fill="{Binding Green}" />
+        <Ellipse Margin="3" Grid.Row="0" Fill="{Binding Red}" />
+        <Ellipse Margin="3" Grid.Row="1" Fill="{Binding Yellow}" />
+        <Ellipse Margin="3" Grid.Row="2" Fill="{Binding Green}" />
 
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
