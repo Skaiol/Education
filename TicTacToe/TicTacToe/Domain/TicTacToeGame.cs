@@ -32,6 +32,11 @@ namespace TicTacToe.Domain
 
         public bool GameIsFinished { get; private set; }
 
+        public int MovesCount
+        {
+            get { return _moves.Count; }
+        }
+
         public void MakeMove(MoveInfo info)
         {
             if (GameIsFinished)
@@ -74,6 +79,11 @@ namespace TicTacToe.Domain
             {
                 throw new DomainException(string.Format("Игрок {0} походил 2 раза подряд", info.Player.Name));
             }
+
+            if (_moves.Select(x => x.Location).Contains(info.Location))
+            {
+                throw new DomainException(string.Format("Игрок {0} походил по уже хоженой тропе", info.Player.Name));
+            }
         }
 
         private void ProcessMove(MoveInfo info)
@@ -84,7 +94,7 @@ namespace TicTacToe.Domain
                 GameIsFinished = true;
                 if (_gameResult == null)
                 {
-                    _gameResult = new DrawnGameResult(_moves.Count);
+                    _gameResult = new DrawnGameResult(MovesCount);
                 }
             }
         }
@@ -98,7 +108,7 @@ namespace TicTacToe.Domain
             if (_winConditions.Any(x => !x.Except(locations).Any()))
             {
                 GameIsFinished = true;
-                _gameResult = new PlayerVictoryResult(info.Player, _moves.Count);
+                _gameResult = new PlayerVictoryResult(info.Player, MovesCount);
             }
         }
     }
