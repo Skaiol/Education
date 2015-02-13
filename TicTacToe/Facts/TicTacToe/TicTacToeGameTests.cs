@@ -1,5 +1,6 @@
 ﻿using TicTacToe.Domain;
 using TicTacToe.Domain.Exceptions;
+using TicTacToe.Domain.Results;
 using Xunit;
 
 namespace Facts.TicTacToe
@@ -54,6 +55,47 @@ namespace Facts.TicTacToe
 
             _game.MakeMove(move1);
             Assert.Throws<DomainException>(() => _game.MakeMove(move2));
+        }
+
+        [Fact]
+        public void SimpleGame_PlayerWins()
+        {
+            var player1 = new Player("Player1");
+            var player2 = new Player("Player2");
+
+            _game.MakeMove(new MoveInfo {Player = player1, Location = MoveLocation.TopLeft});
+            _game.MakeMove(new MoveInfo {Player = player2, Location = MoveLocation.BottomRight});
+            _game.MakeMove(new MoveInfo {Player = player1, Location = MoveLocation.BottomLeft});
+            _game.MakeMove(new MoveInfo {Player = player2, Location = MoveLocation.CenterLeft});
+            _game.MakeMove(new MoveInfo {Player = player1, Location = MoveLocation.TopRight});
+            _game.MakeMove(new MoveInfo {Player = player2, Location = MoveLocation.TopCenter});
+            _game.MakeMove(new MoveInfo {Player = player1, Location = MoveLocation.Center});
+            var result = (PlayerVictoryResult) _game.GetResults();
+
+            Assert.True(_game.GameIsFinished);
+            Assert.Equal(7, _game.MovesCount);
+            Assert.Equal(player1, result.Winner);
+        }
+
+        [Fact]
+        public void SimpleGame_DrawnGame()
+        {
+            var player1 = new Player("Player1");
+            var player2 = new Player("Player2");
+
+            _game.MakeMove(new MoveInfo {Player = player1, Location = MoveLocation.Center});
+            _game.MakeMove(new MoveInfo {Player = player2, Location = MoveLocation.BottomRight});
+            _game.MakeMove(new MoveInfo {Player = player1, Location = MoveLocation.TopLeft});
+            _game.MakeMove(new MoveInfo {Player = player2, Location = MoveLocation.BottomLeft});
+            _game.MakeMove(new MoveInfo {Player = player1, Location = MoveLocation.BottomCenter});
+            _game.MakeMove(new MoveInfo {Player = player2, Location = MoveLocation.TopCenter});
+            _game.MakeMove(new MoveInfo {Player = player1, Location = MoveLocation.CenterLeft});
+            _game.MakeMove(new MoveInfo {Player = player2, Location = MoveLocation.CenterRight});
+            _game.MakeMove(new MoveInfo {Player = player1, Location = MoveLocation.TopRight});
+
+            Assert.True(_game.GameIsFinished);
+            Assert.Equal(9, _game.MovesCount);
+            Assert.IsType(typeof (DrawnGameResult), _game.GetResults());
         }
     }
 }
