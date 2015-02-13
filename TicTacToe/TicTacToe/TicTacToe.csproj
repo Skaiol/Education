@@ -80,6 +80,7 @@
     <Compile Include="Domain\Results\GameResultType.cs" />
     <Compile Include="Domain\Results\PlayerVictoryResult.cs" />
     <Compile Include="Domain\TicTacToeGame.cs" />
+    <Compile Include="ViewModel\FieldInfoViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">

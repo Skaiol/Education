@@ -10,11 +10,15 @@ namespace TicTacToe.Domain
     {
         private readonly int _maxMoveCount;
         private readonly List<MoveInfo> _moves;
+        private readonly Player _player1;
+        private readonly Player _player2;
         private readonly List<List<MoveLocation>> _winConditions;
         private GameResult _gameResult;
 
-        public TicTacToeGame()
+        public TicTacToeGame(Player player1, Player player2)
         {
+            _player2 = player2;
+            _player1 = player1;
             _moves = new List<MoveInfo>();
             _maxMoveCount = Enum.GetNames(typeof (MoveLocation)).Length;
             _winConditions = new List<List<MoveLocation>>
@@ -30,68 +34,68 @@ namespace TicTacToe.Domain
             };
         }
 
-        public bool GameIsFinished { get; private set; }
+        public bool IsFinished { get; private set; }
 
         public int MovesCount
         {
             get { return _moves.Count; }
         }
 
-        public void MakeMove(MoveInfo info)
+        public Player PlayerWhoMoves
         {
-            if (GameIsFinished)
+            get { return MovesCount%2 == 0 ? _player1 : _player2; }
+        }
+
+        public Player PlayerWhoLastMoved
+        {
+            get { return PlayerWhoMoves == _player1 ? _player2 : _player1; }
+        }
+
+        public void MakeMove(MoveLocation location)
+        {
+            if (IsFinished)
             {
                 throw new DomainException("Игра уже завершена");
             }
 
-            ValidateMove(info);
-            _moves.Add(info);
-            ProcessMove(info);
+            ValidateMove(location);
+            _moves.Add(new MoveInfo
+            {
+                Location = location,
+                Player = PlayerWhoMoves
+            });
+            ProcessMove();
         }
 
         public GameResult GetResults()
         {
-            if (!GameIsFinished)
+            if (!IsFinished)
             {
                 throw new DomainException("Игра еще не окончена!");
             }
             return _gameResult;
         }
 
-        private void ValidateMove(MoveInfo info)
+        private void ValidateMove(MoveLocation location)
         {
             if (!_moves.Any())
             {
                 return;
             }
 
-            if (_moves
-                .Concat(new List<MoveInfo> {info})
-                .Select(x => x.Player.Id)
-                .Distinct()
-                .Count() > 2)
+            if (_moves.Select(x => x.Location).Contains(location))
             {
-                throw new DomainException("В игре участвуют более 2-х игроков");
-            }
-
-            MoveInfo lastMove = _moves.Last();
-            if (lastMove.Player.Id == info.Player.Id)
-            {
-                throw new DomainException(string.Format("Игрок {0} походил 2 раза подряд", info.Player.Name));
-            }
-
-            if (_moves.Select(x => x.Location).Contains(info.Location))
-            {
-                throw new DomainException(string.Format("Игрок {0} походил по уже хоженой тропе", info.Player.Name));
+                throw new DomainException(string.Format("Игрок {0} пытается походить по уже хоженой тропе",
+                    PlayerWhoMoves.Name));
             }
         }
 
-        private void ProcessMove(MoveInfo info)
+        private void ProcessMove()
         {
-            CheckIfLastPlayerWins(info);
+            CheckIfLastPlayerWins();
             if (_moves.Count == _maxMoveCount)
             {
-                GameIsFinished = true;
+                IsFinished = true;
                 if (_gameResult == null)
                 {
                     _gameResult = new DrawnGameResult(MovesCount);
@@ -99,16 +103,16 @@ namespace TicTacToe.Domain
             }
         }
 
-        private void CheckIfLastPlayerWins(MoveInfo info)
+        private void CheckIfLastPlayerWins()
         {
             List<MoveLocation> locations = _moves
-                .Where(x => x.Player.Id == info.Player.Id)
+                .Where(x => x.Player.Id == PlayerWhoLastMoved.Id)
                 .Select(x => x.Location)
                 .ToList();
             if (_winConditions.Any(x => !x.Except(locations).Any()))
             {
-                GameIsFinished = true;
-                _gameResult = new PlayerVictoryResult(info.Player, MovesCount);
+                IsFinished = true;
+                _gameResult = new PlayerVictoryResult(PlayerWhoLastMoved, MovesCount);
             }
         }
     }
