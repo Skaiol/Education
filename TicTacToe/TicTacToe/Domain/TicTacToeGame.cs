@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TicTacToe.Domain.BotAi;
 using TicTacToe.Domain.Exceptions;
 using TicTacToe.Domain.Results;
 
@@ -32,6 +33,10 @@ namespace TicTacToe.Domain
                 new List<MoveLocation> {MoveLocation.TopLeft, MoveLocation.Center, MoveLocation.BottomRight},
                 new List<MoveLocation> {MoveLocation.BottomLeft, MoveLocation.Center, MoveLocation.TopRight}
             };
+            if (_player1.IsBot || _player2.IsBot)
+            {
+                BotProcessor = new CleverEnoughBot(this, _moves);
+            }
         }
 
         public bool IsFinished { get; private set; }
@@ -50,6 +55,8 @@ namespace TicTacToe.Domain
         {
             get { return PlayerWhoMoves == _player1 ? _player2 : _player1; }
         }
+
+        public BotProcessor BotProcessor { get; private set; }
 
         public void MakeMove(MoveLocation location)
         {

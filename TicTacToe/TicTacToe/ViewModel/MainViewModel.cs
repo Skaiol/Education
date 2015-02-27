@@ -15,12 +15,18 @@ namespace TicTacToe.ViewModel
         private const string Nolik = "O";
         private TicTacToeGame _game;
         private Player _player1;
+        private string _player1Name;
+        private bool _player1NameIsChecked;
         private Player _player2;
+        private string _player2Name;
+        private bool _player2NameIsChecked;
         private string _statusText;
 
         public MainViewModel()
         {
             StatusText = "Здесь проходит бой!";
+            Player1NameIsChecked = true;
+            Player2NameIsChecked = false;
             MakeMoveCommand = new RelayCommand<MoveLocation>(MakeMoveCommandExecute, MakeMoveCommandCanExecute);
             NewGameCommand = new RelayCommand(NewGameCommandExecute, NewGameCommandCanExecute);
             ExitCommand = new RelayCommand(ExitCommandExecute);
@@ -54,38 +60,86 @@ namespace TicTacToe.ViewModel
             }
         }
 
-        public string Player1Name { get; set; }
-        public string Player2Name { get; set; }
+        public bool Player1NameIsChecked
+        {
+            get { return _player1NameIsChecked; }
+            private set
+            {
+                _player1NameIsChecked = value;
+                RaisePropertyChanged(() => Player1NameIsChecked);
+                Player1Name = value ? string.Empty : "Bot";
+            }
+        }
+
+        public bool Player2NameIsChecked
+        {
+            get { return _player2NameIsChecked; }
+            private set
+            {
+                _player2NameIsChecked = value;
+                RaisePropertyChanged(() => Player2NameIsChecked);
+                Player2Name = value ? string.Empty : "Bot";
+            }
+        }
+
+        public string Player1Name
+        {
+            get { return _player1Name; }
+            private set
+            {
+                _player1Name = value;
+                RaisePropertyChanged(() => Player1Name);
+            }
+        }
+
+        public string Player2Name
+        {
+            get { return _player2Name; }
+            private set
+            {
+                _player2Name = value;
+                RaisePropertyChanged(() => Player2Name);
+            }
+        }
 
         private void MakeMoveCommandExecute(MoveLocation location)
         {
             try
             {
                 _game.MakeMove(location);
-                var field = Fields.Find(x => x.Location == location);
-                field.Text = _player1 == _game.PlayerWhoLastMoved ? Krestik : Nolik;
-                if (_game.IsFinished)
-                {
-                    GameResult result = _game.GetResults();
-                    switch (result.Type)
-                    {
-                        case GameResultType.DrawnGame:
-                            StatusText = "Игра окончена. Ничья.";
-                            break;
-                        case GameResultType.PlayerVictory:
-                            StatusText = string.Format("Игра окончена. Победил {0}",
-                                ((PlayerVictoryResult) result).Winner.Name);
-                            break;
-                    }
-                }
-                else
-                {
-                    StatusText = string.Format("Ход игрока: {0}", _game.PlayerWhoMoves.Name);
-                }
+                MakePostMoveActions(location);
             }
             catch (DomainException ex)
             {
                 StatusText = ex.Message;
+            }
+        }
+
+        private void MakePostMoveActions(MoveLocation location)
+        {
+            FieldInfoViewModel field = Fields.Find(x => x.Location == location);
+            field.Text = _player1 == _game.PlayerWhoLastMoved ? Krestik : Nolik;
+            if (_game.IsFinished)
+            {
+                GameResult result = _game.GetResults();
+                switch (result.Type)
+                {
+                    case GameResultType.DrawnGame:
+                        StatusText = "Игра окончена. Ничья.";
+                        break;
+                    case GameResultType.PlayerVictory:
+                        StatusText = string.Format("Игра окончена. Победил {0}",
+                            ((PlayerVictoryResult) result).Winner.Name);
+                        break;
+                }
+            }
+            else
+            {
+                StatusText = string.Format("Ход игрока: {0}", _game.PlayerWhoMoves.Name);
+                if (_game.PlayerWhoMoves.IsBot)
+                {
+                    _game.BotProcessor.MakeMove();
+                }
             }
         }
 
@@ -96,10 +150,18 @@ namespace TicTacToe.ViewModel
 
         private void NewGameCommandExecute()
         {
-            _player1 = new Player(Player1Name);
-            _player2 = new Player(Player2Name);
+            _player1 = new Player(Player1Name, !Player1NameIsChecked);
+            _player2 = new Player(Player2Name, !Player2NameIsChecked);
             _game = new TicTacToeGame(_player1, _player2);
+            _game.BotProcessor.RegisterBotMoveListener(MakePostMoveActions);
+
             StatusText = string.Format("Ход игрока: {0}", _game.PlayerWhoMoves.Name);
+            Fields.ForEach(x => x.Text = "");
+
+            if (_game.PlayerWhoMoves.IsBot)
+            {
+                _game.BotProcessor.MakeMove();
+            }
         }
 
         private bool NewGameCommandCanExecute()

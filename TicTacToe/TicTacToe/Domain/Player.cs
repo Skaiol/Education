@@ -6,9 +6,10 @@ namespace TicTacToe.Domain
     {
         private readonly Guid _id = Guid.NewGuid();
 
-        public Player(string name)
+        public Player(string name, bool isBot = false)
         {
             Name = name;
+            IsBot = isBot;
         }
 
         public Guid Id
@@ -17,5 +18,6 @@ namespace TicTacToe.Domain
         }
 
         public string Name { get; private set; }
+        public bool IsBot { get; private set; }
     }
 }

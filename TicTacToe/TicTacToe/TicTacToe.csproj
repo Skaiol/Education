@@ -71,6 +71,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Domain\BotAi\BotProcessor.cs" />
+    <Compile Include="Domain\BotAi\CleverEnoughBot.cs" />
+    <Compile Include="Domain\BotAi\FoolBot.cs" />
+    <Compile Include="Domain\BotAi\NotSoFoolBot.cs" />
     <Compile Include="Domain\Exceptions\DomainException.cs" />
     <Compile Include="Domain\Results\DrawnGameResult.cs" />
     <Compile Include="Domain\Results\GameResult.cs" />

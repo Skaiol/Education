@@ -24,13 +24,13 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" Orientation="Vertical">
-                <TextBlock FontSize="20" HorizontalAlignment="Center">Player 1:</TextBlock>
-                <TextBox FontSize="20" Text="{Binding Player1Name}"></TextBox>
+                <CheckBox IsChecked="{Binding Player1NameIsChecked}" Name="Player1NameCheck" FontSize="20" HorizontalAlignment="Center">Player 1:</CheckBox>
+                <TextBox IsEnabled="{Binding Path=IsChecked, ElementName=Player1NameCheck}" FontSize="20" Text="{Binding Player1Name}"></TextBox>
             </StackPanel>
             <TextBlock Grid.Column="1" HorizontalAlignment="Center" FontSize="40">VS</TextBlock>
             <StackPanel Grid.Column="2" Orientation="Vertical">
-                <TextBlock FontSize="20" HorizontalAlignment="Center">Player 2:</TextBlock>
-                <TextBox FontSize="20" Text="{Binding Player2Name}"></TextBox>
+                <CheckBox IsChecked="{Binding Player2NameIsChecked}" Name="Player2NameCheck" FontSize="20" HorizontalAlignment="Center">Player 2:</CheckBox>
+                <TextBox IsEnabled="{Binding Path=IsChecked, ElementName=Player2NameCheck}" FontSize="20" Text="{Binding Player2Name}"></TextBox>
             </StackPanel>
         </Grid>
         
