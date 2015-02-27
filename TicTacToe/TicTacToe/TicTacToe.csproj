@@ -72,9 +72,18 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Domain\BotAi\BotProcessor.cs" />
-    <Compile Include="Domain\BotAi\CleverEnoughBot.cs" />
     <Compile Include="Domain\BotAi\FoolBot.cs" />
     <Compile Include="Domain\BotAi\NotSoFoolBot.cs" />
+    <Compile Include="Domain\BotAi\Rules\BotRule.cs" />
+    <Compile Include="Domain\BotAi\Rules\DoubleThreatRule.cs" />
+    <Compile Include="Domain\BotAi\Rules\EasyLooseRule.cs" />
+    <Compile Include="Domain\BotAi\Rules\EasyWinRule.cs" />
+    <Compile Include="Domain\BotAi\Rules\FirstBotMoveRule.cs" />
+    <Compile Include="Domain\BotAi\Rules\RandomMoveRule.cs" />
+    <Compile Include="Domain\BotAi\Rules\FirstEnemyMoveRule.cs" />
+    <Compile Include="Domain\BotAi\Rules\SecondBotMoveRule.cs" />
+    <Compile Include="Domain\BotAi\SmartEnoughBot.cs" />
+    <Compile Include="Domain\Constants.cs" />
     <Compile Include="Domain\Exceptions\DomainException.cs" />
     <Compile Include="Domain\Results\DrawnGameResult.cs" />
     <Compile Include="Domain\Results\GameResult.cs" />

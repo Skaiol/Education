@@ -3,9 +3,9 @@ using TicTacToe.Domain.BotAi.Rules;
 
 namespace TicTacToe.Domain.BotAi
 {
-    public sealed class NotSoFoolBot : BotProcessor
+    public sealed class SmartEnoughBot : BotProcessor
     {
-        public NotSoFoolBot(TicTacToeGame game, List<MoveInfo> moves) : base(game, moves)
+        public SmartEnoughBot(TicTacToeGame game, List<MoveInfo> moves) : base(game, moves)
         {
         }
 
@@ -15,8 +15,12 @@ namespace TicTacToe.Domain.BotAi
             {
                 return new List<BotRule>
                 {
+                    new FirstBotMoveRule(this),
+                    new FirstEnemyMoveRule(this),
+                    new SecondBotMoveRule(this),
                     new EasyWinRule(this),
                     new EasyLooseRule(this),
+                    new DoubleThreatRule(this),
                     new RandomMoveRule(this)
                 };
             }

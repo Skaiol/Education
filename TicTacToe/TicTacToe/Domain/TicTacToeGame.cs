@@ -13,7 +13,6 @@ namespace TicTacToe.Domain
         private readonly List<MoveInfo> _moves;
         private readonly Player _player1;
         private readonly Player _player2;
-        private readonly List<List<MoveLocation>> _winConditions;
         private GameResult _gameResult;
 
         public TicTacToeGame(Player player1, Player player2)
@@ -22,20 +21,9 @@ namespace TicTacToe.Domain
             _player1 = player1;
             _moves = new List<MoveInfo>();
             _maxMoveCount = Enum.GetNames(typeof (MoveLocation)).Length;
-            _winConditions = new List<List<MoveLocation>>
-            {
-                new List<MoveLocation> {MoveLocation.TopLeft, MoveLocation.TopCenter, MoveLocation.TopRight},
-                new List<MoveLocation> {MoveLocation.CenterLeft, MoveLocation.Center, MoveLocation.CenterRight},
-                new List<MoveLocation> {MoveLocation.BottomLeft, MoveLocation.BottomCenter, MoveLocation.BottomRight},
-                new List<MoveLocation> {MoveLocation.TopLeft, MoveLocation.CenterLeft, MoveLocation.BottomLeft},
-                new List<MoveLocation> {MoveLocation.TopCenter, MoveLocation.Center, MoveLocation.BottomCenter},
-                new List<MoveLocation> {MoveLocation.TopRight, MoveLocation.CenterRight, MoveLocation.BottomRight},
-                new List<MoveLocation> {MoveLocation.TopLeft, MoveLocation.Center, MoveLocation.BottomRight},
-                new List<MoveLocation> {MoveLocation.BottomLeft, MoveLocation.Center, MoveLocation.TopRight}
-            };
             if (_player1.IsBot || _player2.IsBot)
             {
-                BotProcessor = new CleverEnoughBot(this, _moves);
+                BotProcessor = new SmartEnoughBot(this, _moves);
             }
         }
 
@@ -92,8 +80,8 @@ namespace TicTacToe.Domain
 
             if (_moves.Select(x => x.Location).Contains(location))
             {
-                throw new DomainException(string.Format("Игрок {0} пытается походить по уже хоженой тропе",
-                    PlayerWhoMoves.Name));
+                throw new DomainException(string.Format("Игрок {0} пытается походить по уже хоженой тропе: {1}",
+                    PlayerWhoMoves.Name, location));
             }
         }
 
@@ -116,7 +104,7 @@ namespace TicTacToe.Domain
                 .Where(x => x.Player.Id == PlayerWhoLastMoved.Id)
                 .Select(x => x.Location)
                 .ToList();
-            if (_winConditions.Any(x => !x.Except(locations).Any()))
+            if (Constants.WinConditions.Any(x => !x.Except(locations).Any()))
             {
                 IsFinished = true;
                 _gameResult = new PlayerVictoryResult(PlayerWhoLastMoved, MovesCount);
