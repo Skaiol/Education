@@ -17,5 +17,7 @@ namespace MusicStore.Dal.Entities
         [Required]
         [ForeignKey("Artist")]
         public Guid ArtistId { get; set; }
+
+        public virtual ArtistEntity Artist { get; set; }
     }
 }

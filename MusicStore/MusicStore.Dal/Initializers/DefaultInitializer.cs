@@ -29,6 +29,7 @@ namespace MusicStore.Dal.Initializers
             context.TrackEntities.Add(new TrackEntity
             {
                 Id = GuidComb.New(),
+                Number = 1,
                 AlbumId = _innuendo,
                 Name = "Innuendo",
                 Length = 389
@@ -36,6 +37,7 @@ namespace MusicStore.Dal.Initializers
             context.TrackEntities.Add(new TrackEntity
             {
                 Id = GuidComb.New(),
+                Number = 2,
                 AlbumId = _innuendo,
                 Name = "I'm Going Slightly Mad",
                 Length = 262
@@ -43,6 +45,7 @@ namespace MusicStore.Dal.Initializers
             context.TrackEntities.Add(new TrackEntity
             {
                 Id = GuidComb.New(),
+                Number = 3,
                 AlbumId = _innuendo,
                 Name = "Headlong",
                 Length = 279
@@ -50,6 +53,7 @@ namespace MusicStore.Dal.Initializers
             context.TrackEntities.Add(new TrackEntity
             {
                 Id = GuidComb.New(),
+                Number = 4,
                 AlbumId = _innuendo,
                 Name = "I Can't Live with You",
                 Length = 275
@@ -57,6 +61,7 @@ namespace MusicStore.Dal.Initializers
             context.TrackEntities.Add(new TrackEntity
             {
                 Id = GuidComb.New(),
+                Number = 5,
                 AlbumId = _innuendo,
                 Name = "Don't Try So Hard",
                 Length = 209
@@ -64,6 +69,7 @@ namespace MusicStore.Dal.Initializers
             context.TrackEntities.Add(new TrackEntity
             {
                 Id = GuidComb.New(),
+                Number = 6,
                 AlbumId = _innuendo,
                 Name = "Ride the Wild Wind",
                 Length = 281
@@ -71,6 +77,7 @@ namespace MusicStore.Dal.Initializers
             context.TrackEntities.Add(new TrackEntity
             {
                 Id = GuidComb.New(),
+                Number = 7,
                 AlbumId = _innuendo,
                 Name = "All God's People",
                 Length = 259
@@ -78,6 +85,7 @@ namespace MusicStore.Dal.Initializers
             context.TrackEntities.Add(new TrackEntity
             {
                 Id = GuidComb.New(),
+                Number = 8,
                 AlbumId = _innuendo,
                 Name = "These Are the Days of Our Lives",
                 Length = 252
@@ -85,6 +93,7 @@ namespace MusicStore.Dal.Initializers
             context.TrackEntities.Add(new TrackEntity
             {
                 Id = GuidComb.New(),
+                Number = 9,
                 AlbumId = _innuendo,
                 Name = "Delilah",
                 Length = 212
@@ -92,6 +101,7 @@ namespace MusicStore.Dal.Initializers
             context.TrackEntities.Add(new TrackEntity
             {
                 Id = GuidComb.New(),
+                Number = 10,
                 AlbumId = _innuendo,
                 Name = "The Hitman",
                 Length = 292
@@ -99,6 +109,7 @@ namespace MusicStore.Dal.Initializers
             context.TrackEntities.Add(new TrackEntity
             {
                 Id = GuidComb.New(),
+                Number = 11,
                 AlbumId = _innuendo,
                 Name = "Bijou",
                 Length = 216
@@ -106,6 +117,7 @@ namespace MusicStore.Dal.Initializers
             context.TrackEntities.Add(new TrackEntity
             {
                 Id = GuidComb.New(),
+                Number = 12,
                 AlbumId = _innuendo,
                 Name = "The Show Must Go On",
                 Length = 264

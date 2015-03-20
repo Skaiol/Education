@@ -21,6 +21,8 @@ namespace MusicStore.Dal.Entities
         [ForeignKey("Album")]
         public Guid AlbumId { get; set; }
 
+        public virtual AlbumEntity Album { get; set; }
+
         [NotMapped]
         public TimeSpan LengthTime
         {

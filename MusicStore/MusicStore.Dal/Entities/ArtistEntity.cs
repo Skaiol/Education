@@ -14,5 +14,7 @@ namespace MusicStore.Dal.Entities
         [Required]
         [ForeignKey("MusicGenre")]
         public Guid MusicGenreId { get; set; }
+
+        public virtual MusicGenreEntity MusicGenre { get; set; }
     }
 }
