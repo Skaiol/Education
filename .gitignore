@@ -11,7 +11,7 @@ _ReSharper*
 *.cache
 *.ncrunchsolution
 *.ncrunchproject
-/packages/*/*
+*/packages/*/*
 
 /Source/Duku.Site/App_Data/*.msi
 
